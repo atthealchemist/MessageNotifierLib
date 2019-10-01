@@ -1,15 +1,40 @@
 ﻿using MessageNotifierLibrary.Interface;
-using Newtonsoft.Json;
-using System.Net;
+using System.Collections.Generic;
+using System.Threading;
+using Telegram.Bot;
+using Telegram.Bot.Args;
 
 namespace MessageNotifierLibrary.Models
 {
     public class TelegramSender : ISender
     {
-        public bool Send(User recepient, TextMessage message, Credentials senderCredentials)
+
+        private static readonly TelegramBotClient botClient;
+
+        private static async void OnMessageSend(object sender, MessageEventArgs e)
+        {
+
+            if (e.Message.Text != null)
+            {
+                await botClient.SendTextMessageAsync(
+                  chatId: e.Message.Chat,
+                  text: e.Message.Text
+                );
+            }
+        }
+
+
+        public async System.Threading.Tasks.Task<bool> SendAsync(User recepient, TextMessage message, Credentials senderCredentials)
         {
             bool success = false;
 
+            var botClient = new TelegramBotClient(senderCredentials.Telegram.Token);
+            var updates = await botClient.GetUpdatesAsync();
+
+            botClient.StartReceiving();
+            Thread.Sleep(int.MaxValue);
+
+           /* 
             var credentials = senderCredentials.Telegram;
             if (credentials == null)
             {
@@ -60,9 +85,15 @@ namespace MessageNotifierLibrary.Models
 
                     success = sendResult.ok;
                 }
-
-            }
+            }*/
+            
             return success;
+        }
+
+        public bool Send(List<User> receipents, TextMessage message, Credentials senderCredentials)
+        {
+            //telegram bot sends messages according "first in - first out" way
+            return true;
         }
     }
 }

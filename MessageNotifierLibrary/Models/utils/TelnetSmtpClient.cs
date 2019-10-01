@@ -41,12 +41,10 @@ namespace MessageNotifierLibrary.Utils
 
         public class Response
         {
-
             public int Code { get; set; }
             public string Version { get; set; }
             public string Message { get; set; }
             public bool Status { get; set; }
-
         }
 
         private TcpClient client;
@@ -81,7 +79,6 @@ namespace MessageNotifierLibrary.Utils
 
         private void Connect(string url, int port)
         {
-
             Connected = false;
 
             if (client != null)
@@ -115,7 +112,6 @@ namespace MessageNotifierLibrary.Utils
                     Connected = false;
                 }
             }
-
         }
 
         public void Login(string username, string password)
@@ -128,7 +124,6 @@ namespace MessageNotifierLibrary.Utils
             var answer = SendCommand(Convert.ToBase64String(Encoding.ASCII.GetBytes(password)), TelnetCodes.LOGIN_ACCEPTED);
 
             LoggedIn = answer.Status;
-
         }
 
         private void Acquire(string server, bool helo = false)
@@ -136,7 +131,6 @@ namespace MessageNotifierLibrary.Utils
             string acquireCommand = helo ? "helo" : "ehlo";
             var acquire = SendCommand($"{acquireCommand} {server}", TelnetCodes.REQUESTED_MAIL_ACTION_OK);
             Acquired = acquire.Status;
-
         }
 
         public bool SendMail(string sender, string[] receipients, string subject, string message)
@@ -157,7 +151,6 @@ namespace MessageNotifierLibrary.Utils
 
         public bool SendMail(string sender, string recepient, string subject, string message)
         {
-
             var mailFromAnswer = SendCommand($"mail from: <{sender}>", TelnetCodes.REQUESTED_MAIL_ACTION_OK);
             var mailToAnswer = SendCommand($"rcpt to: <{recepient}>", TelnetCodes.REQUESTED_MAIL_ACTION_OK);
 

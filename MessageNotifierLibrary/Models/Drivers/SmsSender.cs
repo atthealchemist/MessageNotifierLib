@@ -1,5 +1,6 @@
 ﻿using MessageNotifierLibrary.Interface;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 
@@ -52,6 +53,11 @@ namespace MessageNotifierLibrary.Models
                 }
             }
             return success;
+        }
+
+        public bool Send(List<User> receipents, TextMessage message, Credentials senderCredentials)
+        {
+            return true;
         }
     }
 }

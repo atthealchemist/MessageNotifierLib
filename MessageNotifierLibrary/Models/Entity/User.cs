@@ -17,6 +17,5 @@ namespace MessageNotifierLibrary.Models
         {
             return $"{Name} {LastName}";
         }
-
     }
 }

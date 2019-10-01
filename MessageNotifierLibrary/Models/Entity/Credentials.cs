@@ -2,7 +2,6 @@
 
 namespace MessageNotifierLibrary.Models
 {
-
     /// <summary>
     /// Sender credentials
     /// </summary>
