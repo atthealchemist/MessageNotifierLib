@@ -1,5 +1,7 @@
 ﻿using MessageNotifierLibrary.Interface;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -9,32 +11,31 @@ namespace MessageNotifierLibrary.Models
     public class TelegramSender : ISender
     {
 
-        private static readonly TelegramBotClient botClient;
+        //private static readonly TelegramBotClient botClient;
 
-        private static async void OnMessageSend(object sender, MessageEventArgs e)
-        {
+        //private static async void OnMessageSend(object sender, MessageEventArgs e)
+        //{
 
-            if (e.Message.Text != null)
-            {
-                await botClient.SendTextMessageAsync(
-                  chatId: e.Message.Chat,
-                  text: e.Message.Text
-                );
-            }
-        }
+        //    if (e.Message.Text != null)
+        //    {
+        //        await botClient.SendTextMessageAsync(
+        //          chatId: e.Message.Chat,
+        //          text: e.Message.Text
+        //        );
+        //    }
+        //}
 
 
-        public async System.Threading.Tasks.Task<bool> SendAsync(User recepient, TextMessage message, Credentials senderCredentials)
+        public bool Send(User recepient, TextMessage message, Credentials senderCredentials)
         {
             bool success = false;
 
-            var botClient = new TelegramBotClient(senderCredentials.Telegram.Token);
-            var updates = await botClient.GetUpdatesAsync();
+            //var botClient = new TelegramBotClient(senderCredentials.Telegram.Token);
+            //var updates = botClient.GetUpdatesAsync();
 
-            botClient.StartReceiving();
-            Thread.Sleep(int.MaxValue);
+            //botClient.SendTextMessageAsync();
+            //Thread.Sleep(int.MaxValue);
 
-           /* 
             var credentials = senderCredentials.Telegram;
             if (credentials == null)
             {
@@ -85,7 +86,7 @@ namespace MessageNotifierLibrary.Models
 
                     success = sendResult.ok;
                 }
-            }*/
+            }
             
             return success;
         }
